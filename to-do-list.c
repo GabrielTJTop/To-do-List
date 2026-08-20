@@ -29,7 +29,7 @@ int main() {
     // Main loop for user input
     while(1) {
         // Display menu options
-        printf("1. Add Task\n");
+        printf("\n1. Add Task\n");
         printf("2. Remove Task\n");
         printf("3. Show Tasks\n");
         printf("4. Exit\n");
@@ -43,6 +43,7 @@ int main() {
         switch(choice) {
             // Handle user choices
             case 1:
+                system("cls"); // Clear the console for better readability
                 printf("Enter task description: ");
                 scanf(" %99[^\n]", description);
                 addTask(&head, description, auto_id++);
@@ -50,16 +51,19 @@ int main() {
                 break;
 
             case 2:
+                system("cls"); // Clear the console for better readability
                 printf("Enter task ID to remove: ");
                 scanf("%d", &id);
                 removeTask(&head, id);
                 break;
             
             case 3:
+                system("cls"); // Clear the console for better readability
                 showTasks(head);
                 break;
             
             case 4:
+                system("cls"); // Clear the console for better readability
                 freeList(&head);
                 printf("Exiting...\n");
                 return 0;
