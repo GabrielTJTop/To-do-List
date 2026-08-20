@@ -13,10 +13,12 @@ typedef struct Task {
 Task* addTask(Task** head, const char* description, int id);
 Task* removeTask(Task** head, int id);
 void showTasks(Task *tasks);
+void freeList(Task** head);
 
 int main() {
     // Initialize variables
     int choice, id;
+    int auto_id = 1; // Auto-incrementing ID for tasks
     char description[100];
 
     // Initialize the head of the linked list
@@ -43,9 +45,8 @@ int main() {
             case 1:
                 printf("Enter task description: ");
                 scanf(" %99[^\n]", description);
-                printf("Enter task ID: ");
-                scanf("%d", &id);
-                addTask(&head, description, id);
+                addTask(&head, description, auto_id++);
+                printf("Task added successfully. ID: %d\n", auto_id - 1);
                 break;
 
             case 2:
@@ -57,6 +58,11 @@ int main() {
             case 3:
                 showTasks(head);
                 break;
+            
+            case 4:
+                freeList(&head);
+                printf("Exiting...\n");
+                return 0;
         }
     }
 
@@ -89,6 +95,7 @@ Task* removeTask(Task** head, int id) {
                 previous->next = current->next;
             }
             free(current);
+            printf("Task with ID %d removed successfully.\n", id);
             return NULL;
         }
         previous = current;
@@ -104,5 +111,15 @@ void showTasks(Task *tasks) {
         printf("Task ID: %d, Description: %s\n", current->id,
         current->description);
         current = current->next;
+    }
+}
+
+void freeList(Task** head) {
+    Task* current = *head;
+    Task* nextTask;
+    while (current != NULL) {
+        nextTask = current->next;
+        free(current);
+        current = nextTask;
     }
 }
